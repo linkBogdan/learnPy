@@ -14,6 +14,7 @@ def get_number():
             return int(user_input) # Return the valid integer
         except ValueError:
             print("Invalid input. Please enter a valid integer.")
+pass 
 
 def is_even(number):
     """
@@ -21,14 +22,16 @@ def is_even(number):
     Returns True if even, False otherwise.
     """
     return number % 2 == 0
+pass
 
-# Example usage
-while True:
-    number = get_number() # Ask the user for a number
-    if number is None:
-        print("Exiting the program.")
-        break # Exit if the user types 'stop'
-    if is_even(number):
-        print(f"{number} is even.")
-    else:
-        print(f"{number} is odd.")
+# Main program
+if __name__ == "__main__":
+    while True:
+        number = get_number() # Ask the user for a number
+        if number is None:
+            print("Exiting the program.")
+            break # Exit if the user types 'stop'
+        if is_even(number):
+            print(f"{number} is even.")
+        else:
+            print(f"{number} is odd.")
