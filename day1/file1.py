@@ -5,8 +5,12 @@
 number = input("Enter a number: ")
 
 # Convert the input to an integer.
-# (This will raise an error if the input is not a valid integer.)
-number = int(number)
+# This wont crash but it will stop the program.
+try:
+    number = int(number)
+except ValueError:
+    print("Invalid input. Please enter a valid integer.")
+    exit()
 
 # Use modulo operator to check for evenness.
 if number % 2 == 0: 
