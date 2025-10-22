@@ -1,19 +1,27 @@
 # learnPy/day1/file1.py
-# This program asks the user for a number and tells if it is even or odd.
-# It handles invalid inputs gracefully.
 
-# Keep asking for input until a valid integer is provided.
-while True:
-    number = input("Enter a number: ") # Ask user for input.
-    try:
-        number = int(number) # Try to convert input to an integer.
-        break # Exit the loop if conversion is successful.
-    except ValueError:
-        print("Invalid input. Please enter a valid integer.")
-    
+def get_number():
+    """
+    Prompt the user to enter a number until a valid integer is provided.
+    Returns the integer.
+    """
+    while True:
+        user_input = input("Please enter a number: ")
+        try:
+            return int(user_input) # Return the valid integer
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
 
-# Use modulo operator to check for evenness.
-if number % 2 == 0: 
-    print(f"{number} is even.") # Number is divisible by 2
+def is_even(number):
+    """
+    Check if the provided number is even.
+    Returns True if even, False otherwise.
+    """
+    return number % 2 == 0
+
+# Example usage
+number = get_number() # Ask the user for a number
+if is_even(number):
+    print(f"{number} is even.")
 else:
-    print(f"{number} is odd.") # Number is not divisible by 2
+    print(f"{number} is odd.")            
