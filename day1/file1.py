@@ -2,11 +2,14 @@
 
 def get_number():
     """
-    Prompt the user to enter a number until a valid integer is provided.
-    Returns the integer.
+    Prompt the user to enter a number until a valid integer is provided,
+    or the user types 'stop' to exit.
+    Returns the integer or None if the user wants to stop.
     """
     while True:
         user_input = input("Please enter a number: ")
+        if user_input.lower() == 'stop':
+            return None # Signal to stop the program
         try:
             return int(user_input) # Return the valid integer
         except ValueError:
@@ -20,8 +23,12 @@ def is_even(number):
     return number % 2 == 0
 
 # Example usage
-number = get_number() # Ask the user for a number
-if is_even(number):
-    print(f"{number} is even.")
-else:
-    print(f"{number} is odd.")            
+while True:
+    number = get_number() # Ask the user for a number
+    if number is None:
+        print("Exiting the program.")
+        break # Exit if the user types 'stop'
+    if is_even(number):
+        print(f"{number} is even.")
+    else:
+        print(f"{number} is odd.")
