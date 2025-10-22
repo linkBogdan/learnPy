@@ -6,7 +6,7 @@ print("Welcome to the Number Guessing Game!")
 print("I have selected a random number between 1 and 20.")
 print("Can you guess what it is?")
 random_number = random.randint(1, 20)
-guess = get_number()
+guess = get_number(prompt= "Take a guess: ")
 
 if guess == random_number:
     print("Congratulations! You guessed the correct number.")
