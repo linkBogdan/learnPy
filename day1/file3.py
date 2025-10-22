@@ -22,5 +22,6 @@ def collect_numbers(prompt, stop_on_empty=True, allow_repetition=True):
     return unique_numbers if not allow_repetition else numbers
     
 # Main program
-my_numbers = collect_numbers(prompt, stop_on_empty=True, allow_repetition=False)
-print("You entered:", my_numbers)
+if __name__ == "__main__":
+    my_numbers = collect_numbers(prompt, stop_on_empty=True, allow_repetition=False)
+    print("You entered:", my_numbers)
