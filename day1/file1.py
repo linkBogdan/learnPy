@@ -1,16 +1,16 @@
 # learnPy/day1/file1.py
 # This program asks the user for a number and tells if it is even or odd.
+# It handles invalid inputs gracefully.
 
-# Ask the user to enter a number.
-number = input("Enter a number: ")
-
-# Convert the input to an integer.
-# This wont crash but it will stop the program.
-try:
-    number = int(number)
-except ValueError:
-    print("Invalid input. Please enter a valid integer.")
-    exit()
+# Keep asking for input until a valid integer is provided.
+while True:
+    number = input("Enter a number: ") # Ask user for input.
+    try:
+        number = int(number) # Try to convert input to an integer.
+        break # Exit the loop if conversion is successful.
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
+    
 
 # Use modulo operator to check for evenness.
 if number % 2 == 0: 
