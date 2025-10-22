@@ -1,13 +1,13 @@
 # learnPy/day1/file1.py
 
-def get_number():
+def get_number(prompt="Please enter a number (or type 'stop' to exit): "):
     """
     Prompt the user to enter a number until a valid integer is provided,
     or the user types 'stop' to exit.
     Returns the integer or None if the user wants to stop.
     """
     while True:
-        user_input = input("Please enter a number: ")
+        user_input = input(prompt)
         if user_input.lower() == 'stop':
             return None # Signal to stop the program
         try:
