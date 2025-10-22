@@ -1,6 +1,6 @@
 # learnPy/day1/file1.py
 
-def get_number(prompt="Please enter a number (or type 'stop' to exit): "):
+def get_number(prompt="Please enter a number (or type 'stop' to exit): ", stop_on_empty=False):
     """
     Prompt the user to enter a number until a valid integer is provided,
     or the user types 'stop' to exit.
@@ -8,13 +8,23 @@ def get_number(prompt="Please enter a number (or type 'stop' to exit): "):
     """
     while True:
         user_input = input(prompt)
+        if not user_input:
+            if stop_on_empty:
+                return None # Stop on empty input
+            else:
+                print("No input provided.")
+                continue # Ignore and reprompt
+        
+        # Handle 'stop' command
         if user_input.lower() == 'stop':
-            return None # Signal to stop the program
+            return None # Signal to stop
+        
+        # Try to convert input to an integer
         try:
             return int(user_input) # Return the valid integer
         except ValueError:
             print("Invalid input. Please enter a valid integer.")
-pass 
+            
 
 def is_even(number):
     """
@@ -22,7 +32,6 @@ def is_even(number):
     Returns True if even, False otherwise.
     """
     return number % 2 == 0
-pass
 
 # Main program
 if __name__ == "__main__":
