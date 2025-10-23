@@ -1,7 +1,7 @@
 # learnPy/day1/file3.py
 # Small program to collect numbers from the user into a list
 
-from file1 import get_number  # Importing the get_number function from file1.py
+from day1.file1 import get_number  # Importing the get_number function from file1.py
 
 prompt = "Enter a number to add to the list (or type 'stop' to finish):"
 def collect_numbers(prompt, stop_on_empty=True, allow_repetition=True):
