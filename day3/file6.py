@@ -37,10 +37,7 @@ def calculate_working_days(year, month):
     month_name, month_days, weekend_days, holidays = get_month(year, month)
     working_days_count = month_days - weekend_days - holidays
     print (f"Working days: {working_days_count} ")
-    # Meant for testing purposes
-    working_days_plus_holidays = month_days - weekend_days
-    print (f"Working days plus holidays: {working_days_plus_holidays} ")
-    # Will remove later.
+
     return working_days_count
 
 # Centralized function to get month details
@@ -54,8 +51,10 @@ def get_month(year, month):
     month_days = calendar.monthrange(year, month)[1]
     weekend_days = sum(1 for day in range(1, month_days + 1)
                    if calendar.weekday(year, month, day) in (5, 6))
-    holidays = len(get_holidays(year, month))
-    return month_name, month_days, weekend_days, holidays
+    month_holidays = get_holidays(year, month)
+    holidays = [day for day in month_holidays if day.weekday() < 5]  # Count only holidays that are not weekends
+    holidays_count = len(holidays)
+    return month_name, month_days, weekend_days, holidays_count
 
 def create_monthly_schedule(year, month):
 
