@@ -2,6 +2,13 @@ import calendar
 import json
 import os
 
+# Function to calculate working days in a month
+def calculate_working_days(year, month):
+    month_name, month_days, weekend_days, holidays = get_month(year, month)
+    working_days_count = month_days - weekend_days - holidays
+    print (f"Working days: {working_days_count} ")
+    return working_days_count
+
 # Centralized function to get month details
 def get_month(year, month):
     month_name = calendar.month_name[month]
@@ -32,7 +39,5 @@ def create_monthly_schedule(year, month):
 if __name__ == "__main__":
     year = int(input("Enter year (e.g., 2024): "))
     month = int(input("Enter month (1-12): "))
-    print (f"Month name: {get_month(year, month)[0]}")
-    print (f"Number of days: {get_month(year, month)[1]}")
-    print (f"Number weekend days: {get_month(year, month)[2]}")
-    print (f"Number of holidays: {get_month(year, month)[3]}")
+    # Call for testing
+    calculate_working_days(year, month)
