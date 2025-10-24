@@ -31,7 +31,6 @@ def filter_eligible_workers():
                         and all(not worker.get(leave, False) for leave in leave_keys)
                         and worker.get("role") not in ["sef", "subsef"]
                         ]
-    print(f"Eligible workers: {[worker['name'] for worker in eligible_workers]}")
     return eligible_workers
 
 def get_working_hours_per_worker():
