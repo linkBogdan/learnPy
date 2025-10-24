@@ -3,6 +3,8 @@ import calendar
 import json
 import os
 
+# TODO: Make a data structure for shifts and workers, add a helper function to assign shifts to workers and loop it over days in month to create a schedule.
+
 def count_eligible_workers():
     '''
     This function counts and returns the number of eligible workers
