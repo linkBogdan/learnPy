@@ -1,3 +1,5 @@
+import json
+
 def get_user_info():
     while True:
         print("Hello! Welcome to the program.")
@@ -63,3 +65,5 @@ def get_user_info():
 if __name__ == "__main__":
     user_info = get_user_info()
     print(user_info)
+    with open("user_info.json", "w") as f:
+        json.dump(user_info, f, indent=4)
