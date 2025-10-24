@@ -3,6 +3,19 @@ import calendar
 import json
 import os
 
+# Observation: I need to check if holiday is already weekend day to avoid double counting.
+def get_working_hours_per_worker():
+    '''
+    This function retrieves the standard working hours per worker.
+    '''
+    working_days = calculate_working_days(year, month)
+    hours = 8
+    hours_per_worker = working_days * hours
+    print(f"Working hours per worker in {calendar.month_name[month]} {year}: {hours_per_worker} hours")
+    return hours_per_worker
+    
+    
+
 def get_holidays(year, month):
     '''
     This function retrieves the holidays for a given month and year in Romania.
@@ -66,4 +79,4 @@ if __name__ == "__main__":
     year = int(input("Enter year (e.g., 2024): "))
     month = int(input("Enter month (1-12): "))
     # Call for testing
-    calculate_working_days(year, month)
+    get_working_hours_per_worker()
