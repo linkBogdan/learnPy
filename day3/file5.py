@@ -1,4 +1,9 @@
 import json
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+json_file_path = os.path.join(current_dir, "user_info.json")
 
 def get_user_info():
     while True:
@@ -65,5 +70,5 @@ def get_user_info():
 if __name__ == "__main__":
     user_info = get_user_info()
     print(user_info)
-    with open("user_info.json", "w") as f:
+    with open(json_file_path, "w") as f:
         json.dump(user_info, f, indent=4)
