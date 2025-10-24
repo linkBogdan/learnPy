@@ -3,6 +3,14 @@ import calendar
 import json
 import os
 
+def count_eligible_workers():
+    '''
+    This function counts and returns the number of eligible workers
+    based on their status.
+    '''
+    eligible_workers = filter_eligible_workers()
+    count = len(eligible_workers)
+    print(f"Number of eligible workers: {count}")
 def filter_eligible_workers():
     '''
     This function filters and returns the list of eligible workers
@@ -26,8 +34,6 @@ def filter_eligible_workers():
     print(f"Eligible workers: {[worker['name'] for worker in eligible_workers]}")
     return eligible_workers
 
-
-# Observation: I need to check if holiday is already weekend day to avoid double counting.
 def get_working_hours_per_worker():
     '''
     This function retrieves the standard working hours per worker.
@@ -100,4 +106,4 @@ if __name__ == "__main__":
     # year = int(input("Enter year (e.g., 2024): "))
     # month = int(input("Enter month (1-12): "))
     # Call for testing
-    eligible_workers = filter_eligible_workers()
+    count_eligible_workers()
