@@ -3,6 +3,30 @@ import calendar
 import json
 import os
 
+def filter_eligible_workers():
+    '''
+    This function filters and returns the list of eligible workers
+    based on their status.
+    '''
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    schedule_dir = os.path.join(current_dir, "schedule")
+    os.makedirs(schedule_dir, exist_ok=True) # Ensure schedule directory exists
+    path_to_workers = os.path.join(schedule_dir, "workers.json")
+
+    with open(path_to_workers, "r") as f:
+        workers = json.load(f)["workers"]
+
+    leave_keys = ["concediu_medical", "concediu_odihna", "concediu_ingrijire_copil"]
+
+    eligible_workers = [worker for worker in workers 
+                        if not worker.get("busy", False)
+                        and all(not worker.get(leave, False) for leave in leave_keys)
+                        and worker.get("role") not in ["sef", "subsef"]
+                        ]
+    print(f"Eligible workers: {[worker['name'] for worker in eligible_workers]}")
+    return eligible_workers
+
+
 # Observation: I need to check if holiday is already weekend day to avoid double counting.
 def get_working_hours_per_worker():
     '''
@@ -14,8 +38,6 @@ def get_working_hours_per_worker():
     print(f"Working hours per worker in {calendar.month_name[month]} {year}: {hours_per_worker} hours")
     return hours_per_worker
     
-    
-
 def get_holidays(year, month):
     '''
     This function retrieves the holidays for a given month and year in Romania.
@@ -75,7 +97,7 @@ def create_monthly_schedule(year, month):
 
 
 if __name__ == "__main__":
-    year = int(input("Enter year (e.g., 2024): "))
-    month = int(input("Enter month (1-12): "))
+    # year = int(input("Enter year (e.g., 2024): "))
+    # month = int(input("Enter month (1-12): "))
     # Call for testing
-    get_working_hours_per_worker()
+    eligible_workers = filter_eligible_workers()
