@@ -2,22 +2,37 @@ import calendar
 import json
 import os
 
+# Centralized function to get month details
+def get_month(year, month):
+    month_name = calendar.month_name[month]
+    month_days = calendar.monthrange(year, month)[1]
+    weekend_days = sum(1 for day in range(1, month_days + 1)
+                   if calendar.weekday(year, month, day) in (5, 6))
+    holidays = 0  # Placeholder for holidays count; can be customized
+    return month_name, month_days, weekend_days, holidays
+
 def create_monthly_schedule(year, month):
 
-    month_name = calendar.month_name[month]
-    num_days = calendar.monthrange(year, month)[1]
+    month_name, month_days = get_month(year, month)[:2]
+    print(f"Creating schedule for {month_name} {year} with {month_days}) days.")
 
-    schedule = {f"{month_name} {day}": [] for day in range(1, num_days + 1)}    
+    # Initialize schedule dictionary
+    schedule = {f"{month_name} {day}": [] for day in range(1, month_days + 1)}    
 
+    # Save schedule to JSON file
     current_dir = os.path.dirname(os.path.abspath(__file__))
     json_name = f"{month_name}_{year}_schedule.json"
-    json_file_path = os.path.join(current_dir, json_name)
+    json_file_path = os.path.join(current_dir, "schedule", json_name)
     
     with open(json_file_path, "w") as f:
         json.dump(schedule, f, indent=4)
     print(f"Schedule for {month_name} {year} has been created and saved to {json_name}.")
 
+
 if __name__ == "__main__":
     year = int(input("Enter year (e.g., 2024): "))
     month = int(input("Enter month (1-12): "))
-    create_monthly_schedule(year, month)
+    print (f"Month name: {get_month(year, month)[0]}")
+    print (f"Number of days: {get_month(year, month)[1]}")
+    print (f"Number weekend days: {get_month(year, month)[2]}")
+    print (f"Number of holidays: {get_month(year, month)[3]}")
