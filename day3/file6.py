@@ -58,15 +58,14 @@ def count_eligible_workers():
     '''
     eligible_workers = filter_eligible_workers()
     count = len(eligible_workers)
-    print(f"Number of eligible workers: {count}")
     return count
 
-def filter_eligible_workers():
+def filter_eligible_workers(year=None, month=None):
     '''
     This function filters and returns the list of eligible workers
     based on their status.
     '''
-    max_hours = get_working_hours_per_worker(None, None)
+    max_hours = get_working_hours_per_worker(year, month)
 
     current_dir, schedule_dir = get_schedule_directory()
     path_to_workers = os.path.join(schedule_dir, "workers.json")
@@ -90,7 +89,6 @@ def filter_eligible_workers():
         if worker["hours_assigned"] >= max_hours:
             continue # worker has reached max hours
         eligible_workers.append(worker)
-    print (f"Eligible workers: {[worker['name'] for worker in eligible_workers]}")
     return eligible_workers
 
 def get_working_hours_per_worker(year, month):
@@ -103,7 +101,6 @@ def get_working_hours_per_worker(year, month):
     working_days = get_working_days(year, month)
     hours = 8
     hours_per_worker = working_days * hours
-    print(f"Working hours per worker in {calendar.month_name[month]} {year}: {hours_per_worker} hours")
     return hours_per_worker
     
 def get_holidays(year, month):
@@ -116,7 +113,6 @@ def get_holidays(year, month):
     ro_holidays = holidays.RO(years=year)
 
     month_holidays = [day for day in ro_holidays if day.month == month]
-    print(f"Holidays in {calendar.month_name[month]} {year}: {month_holidays}")
     return month_holidays
 
 # Function to calculate working days in a month
@@ -130,7 +126,6 @@ def get_working_days(year, month):
 
     month_name, month_days, weekend_days, holidays = get_month(year, month)
     working_days_count = month_days - weekend_days - holidays
-    print (f"Working days: {working_days_count} ")
 
     return working_days_count
 
@@ -161,7 +156,6 @@ def create_monthly_schedule(year, month):
     current_dir, schedule_dir = get_schedule_directory()
 
     month_name, month_days = get_month(year, month)[:2]
-    print(f"Creating schedule for {month_name} {year} with {month_days} days.")
 
     # Initialize schedule dictionary
     schedule = {f"{month_name} {day}": [] for day in range(1, month_days + 1)}    
@@ -172,10 +166,10 @@ def create_monthly_schedule(year, month):
     
     with open(json_file_path, "w") as f:
         json.dump(schedule, f, indent=4)
-    print(f"Schedule for {month_name} {year} has been created and saved to {json_name}.")
 
 if __name__ == "__main__":
     
     # Call for testing
 
-    assign_hours(2, 8)
+    workers = filter_eligible_workers(2024, 6)
+    print("Eligible workers:", [worker.get("name") for worker in workers])
