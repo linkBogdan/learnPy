@@ -3,7 +3,14 @@ import calendar
 import json
 import os
 
-# TODO: Make a data structure for shifts and workers, add a helper function to assign shifts to workers and loop it over days in month to create a schedule.
+# Create a helper funtion to get the schedule directory path
+# This will help us reuse code instead of repeating the same code multiple times
+def get_schedule_directory():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    schedule_dir = os.path.join(current_dir, "schedule")
+    os.makedirs(schedule_dir, exist_ok=True) # Ensure schedule directory exists
+    return current_dir, schedule_dir
+
 
 def count_eligible_workers():
     '''
@@ -13,14 +20,13 @@ def count_eligible_workers():
     eligible_workers = filter_eligible_workers()
     count = len(eligible_workers)
     print(f"Number of eligible workers: {count}")
+
 def filter_eligible_workers():
     '''
     This function filters and returns the list of eligible workers
     based on their status.
     '''
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    schedule_dir = os.path.join(current_dir, "schedule")
-    os.makedirs(schedule_dir, exist_ok=True) # Ensure schedule directory exists
+    current_dir, schedule_dir = get_schedule_directory()
     path_to_workers = os.path.join(schedule_dir, "workers.json")
 
     with open(path_to_workers, "r") as f:
@@ -87,6 +93,8 @@ def get_month(year, month):
 
 def create_monthly_schedule(year, month):
 
+    current_dir, schedule_dir = get_schedule_directory()
+
     month_name, month_days = get_month(year, month)[:2]
     print(f"Creating schedule for {month_name} {year} with {month_days}) days.")
 
@@ -104,7 +112,8 @@ def create_monthly_schedule(year, month):
 
 
 if __name__ == "__main__":
-    # year = int(input("Enter year (e.g., 2024): "))
-    # month = int(input("Enter month (1-12): "))
+    year = int(input("Enter year (e.g., 2024): "))
+    month = int(input("Enter month (1-12): "))
     # Call for testing
-    count_eligible_workers()
+    el_w = filter_eligible_workers()
+print(el_w)
