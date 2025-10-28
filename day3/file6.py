@@ -3,6 +3,20 @@ import calendar
 import json
 import os
 
+is_needed = False # Set to True if you want to input year and month
+
+def get_worker_name():
+    '''
+    This function retrieves the name of a worker from a worker dictionary.
+    '''
+    worker_data = filter_eligible_workers()
+    names = []
+
+    for worker in worker_data:
+        names.append(worker.get("name"))
+
+    return names
+
 # Create a helper funtion to get the schedule directory path
 # This will help us reuse code instead of repeating the same code multiple times
 def get_schedule_directory():
@@ -55,6 +69,7 @@ def get_holidays(year, month):
     '''
     This function retrieves the holidays for a given month and year in Romania.
     '''
+    is_needed = True # Function does dependent on input
 
     ro_holidays = holidays.RO(years=year)
 
@@ -112,8 +127,14 @@ def create_monthly_schedule(year, month):
 
 
 if __name__ == "__main__":
-    year = int(input("Enter year (e.g., 2024): "))
-    month = int(input("Enter month (1-12): "))
+    # Bool for input
+    is_needed = False
+    # TODO: Handle exceptions to only prompt for input when necessary
+    
+    if is_needed: 
+        year = int(input("Enter year (e.g., 2024): "))
+        month = int(input("Enter month (1-12): "))
+    
     # Call for testing
-    el_w = filter_eligible_workers()
-print(el_w)
+    s = get_worker_name()
+    print(s[0:3]) # Print first 3 names for brevity
