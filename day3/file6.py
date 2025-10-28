@@ -41,6 +41,7 @@ def count_eligible_workers():
     eligible_workers = filter_eligible_workers()
     count = len(eligible_workers)
     print(f"Number of eligible workers: {count}")
+    return count
 
 def filter_eligible_workers():
     '''
