@@ -48,6 +48,8 @@ def filter_eligible_workers():
     This function filters and returns the list of eligible workers
     based on their status.
     '''
+    max_hours = get_working_hours_per_worker(None, None)
+
     current_dir, schedule_dir = get_schedule_directory()
     path_to_workers = os.path.join(schedule_dir, "workers.json")
 
@@ -56,11 +58,21 @@ def filter_eligible_workers():
 
     leave_keys = ["concediu_medical", "concediu_odihna", "concediu_ingrijire_copil"]
 
-    eligible_workers = [worker for worker in workers 
-                        if not worker.get("busy", False)
-                        and all(not worker.get(leave, False) for leave in leave_keys)
-                        and worker.get("role") not in ["sef", "subsef"]
-                        ]
+    eligible_workers = []
+    for worker in workers:
+        # Check if worker has assigned hours field, if not, set it to 0
+        worker.setdefault("hours_assigned", 0)
+
+        if worker.get("busy", False):
+            continue
+        if any(worker.get(leave, False) for leave in leave_keys):
+            continue
+        if worker.get("role") in ["sef", "subsef"]:
+            continue
+        if worker["hours_assigned"] >= max_hours:
+            continue # worker has reached max hours
+        eligible_workers.append(worker)
+    print (f"Eligible workers: {[worker['name'] for worker in eligible_workers]}")
     return eligible_workers
 
 def get_working_hours_per_worker(year, month):
@@ -70,7 +82,7 @@ def get_working_hours_per_worker(year, month):
     if year is None or month is None:
         year, month = get_input()
 
-    working_days = calculate_working_days(year, month)
+    working_days = get_working_days(year, month)
     hours = 8
     hours_per_worker = working_days * hours
     print(f"Working hours per worker in {calendar.month_name[month]} {year}: {hours_per_worker} hours")
@@ -90,7 +102,7 @@ def get_holidays(year, month):
     return month_holidays
 
 # Function to calculate working days in a month
-def calculate_working_days(year, month):
+def get_working_days(year, month):
     '''
     This function calculates the number of working days in a given month and year,
     excluding weekends and holidays.
@@ -131,7 +143,7 @@ def create_monthly_schedule(year, month):
     current_dir, schedule_dir = get_schedule_directory()
 
     month_name, month_days = get_month(year, month)[:2]
-    print(f"Creating schedule for {month_name} {year} with {month_days}) days.")
+    print(f"Creating schedule for {month_name} {year} with {month_days} days.")
 
     # Initialize schedule dictionary
     schedule = {f"{month_name} {day}": [] for day in range(1, month_days + 1)}    
@@ -149,4 +161,4 @@ def create_monthly_schedule(year, month):
 if __name__ == "__main__":
     
     # Call for testing
-    count_eligible_workers()
+    get_worker_name()
