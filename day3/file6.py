@@ -3,6 +3,24 @@ import calendar
 import json
 import os
 
+def assign_hours(worker_id, hours_to_add):
+    '''
+    This function assigns additional working hours to a worker
+    '''
+    current_dir, schedule_dir = get_schedule_directory()
+    path_to_workers = os.path.join(schedule_dir, "workers.json")
+
+    with open(path_to_workers, "r") as f:
+        data = json.load(f)
+
+        for worker in data["workers"]:
+            if worker["id"] == worker_id:
+                worker["hours_assigned"] = worker.get("hours_assigned", 0) + hours_to_add
+                break
+
+    with open(path_to_workers, "w") as f:
+        json.dump(data, f, indent=4)
+        print(f"Assigned {hours_to_add} hours to worker ID {worker_id}.")
 
 def get_input():
     '''
@@ -157,8 +175,31 @@ def create_monthly_schedule(year, month):
         json.dump(schedule, f, indent=4)
     print(f"Schedule for {month_name} {year} has been created and saved to {json_name}.")
 
+    ### Testing the functions
+def test_get_worker_hours(worker_id):
+        '''
+        This function tests retrieving the working hours assigned to a worker.
+        '''
+        current_dir, schedule_dir = get_schedule_directory()
+        path_to_workers = os.path.join(schedule_dir, "workers.json")
+
+        with open(path_to_workers, "r") as f:
+            data = json.load(f)
+
+            for worker in data["workers"]:
+                if worker["id"] == worker_id:
+                    hours_assigned = worker.get("hours_assigned", 0)
+                    print(f"Worker ID {worker_id} has {hours_assigned} hours assigned.")
+                    return hours_assigned
+        print(f"Worker ID {worker_id} not found.")
+        return None
+    
+
+
 
 if __name__ == "__main__":
     
     # Call for testing
-    get_worker_name()
+
+    test_get_worker_hours(2)
+    assign_hours(2, 8)
