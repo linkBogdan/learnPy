@@ -167,9 +167,8 @@ def create_monthly_schedule(year, month):
     schedule = {f"{month_name} {day}": [] for day in range(1, month_days + 1)}    
 
     # Save schedule to JSON file
-    current_dir = os.path.dirname(os.path.abspath(__file__))
     json_name = f"{month_name}_{year}_schedule.json"
-    json_file_path = os.path.join(current_dir, "schedule", json_name)
+    json_file_path = os.path.join(schedule_dir, json_name)
     
     with open(json_file_path, "w") as f:
         json.dump(schedule, f, indent=4)
