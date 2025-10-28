@@ -3,7 +3,14 @@ import calendar
 import json
 import os
 
-is_needed = False # Set to True if you want to input year and month
+
+def get_input():
+    '''
+    This function prompts the user to input a year and month.
+    '''
+    year = int(input("Enter year (e.g., 2024): "))
+    month = int(input("Enter month (1-12): "))
+    return year, month
 
 def get_worker_name():
     '''
@@ -55,10 +62,13 @@ def filter_eligible_workers():
                         ]
     return eligible_workers
 
-def get_working_hours_per_worker():
+def get_working_hours_per_worker(year, month):
     '''
     This function retrieves the standard working hours per worker.
     '''
+    if year is None or month is None:
+        year, month = get_input()
+
     working_days = calculate_working_days(year, month)
     hours = 8
     hours_per_worker = working_days * hours
@@ -69,7 +79,8 @@ def get_holidays(year, month):
     '''
     This function retrieves the holidays for a given month and year in Romania.
     '''
-    is_needed = True # Function does dependent on input
+    if year is None or month is None:
+        year, month = get_input()
 
     ro_holidays = holidays.RO(years=year)
 
@@ -83,6 +94,8 @@ def calculate_working_days(year, month):
     This function calculates the number of working days in a given month and year,
     excluding weekends and holidays.
     '''
+    if year is None or month is None:
+        year, month = get_input()
 
     month_name, month_days, weekend_days, holidays = get_month(year, month)
     working_days_count = month_days - weekend_days - holidays
@@ -96,6 +109,8 @@ def get_month(year, month):
     This function returns the month name, total days in the month,
     number of weekend days, and number of holidays for the given month and year.
     '''
+    if year is None or month is None:
+        year, month = get_input()
 
     month_name = calendar.month_name[month]
     month_days = calendar.monthrange(year, month)[1]
@@ -104,9 +119,13 @@ def get_month(year, month):
     month_holidays = get_holidays(year, month)
     holidays = [day for day in month_holidays if day.weekday() < 5]  # Count only holidays that are not weekends
     holidays_count = len(holidays)
+    print(f"{month_name} {year} has {month_days} days, {weekend_days} weekend days, and {holidays_count} holidays during the week.")
     return month_name, month_days, weekend_days, holidays_count
 
 def create_monthly_schedule(year, month):
+
+    if year is None or month is None:
+        year, month = get_input()
 
     current_dir, schedule_dir = get_schedule_directory()
 
@@ -127,14 +146,6 @@ def create_monthly_schedule(year, month):
 
 
 if __name__ == "__main__":
-    # Bool for input
-    is_needed = False
-    # TODO: Handle exceptions to only prompt for input when necessary
-    
-    if is_needed: 
-        year = int(input("Enter year (e.g., 2024): "))
-        month = int(input("Enter month (1-12): "))
     
     # Call for testing
-    s = get_worker_name()
-    print(s[0:3]) # Print first 3 names for brevity
+    count_eligible_workers()
