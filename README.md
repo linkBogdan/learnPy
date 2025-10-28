@@ -31,3 +31,6 @@ Finally, I updated this README.
 
 ### Day 4 - Day 6
 I had to take a break due to personal reasons but we are back on Day 7
+
+### Day 7
+Although on Day 7 i continued working on File 6 and improving readabelity and implemented more features.  
