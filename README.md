@@ -34,3 +34,6 @@ I had to take a break due to personal reasons but we are back on Day 7
 
 ### Day 7
 Although on Day 7 i continued working on File 6 and improving readabelity and implemented more features.  
+
+### Day 8
+This was the worst day ever. I didnt get to make any updates and the entire day was just me struggling to dual boot my machine with Linux (first time). After i got that down, apparently you need Nasa levels of intelligence to use WiFi on Linux so thats what I tried to figure out for 6 hours.
