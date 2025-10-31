@@ -2,10 +2,18 @@
 # So this program will give me what file I'm on and what day.
 import os
     
+# Function that lists every directory that starts with 'day'.
+def list_dir():
+    
+    with os.scandir(path=get_path()) as it:
+        for entry in it:
+            if entry.name.startswith('day') and entry.is_dir():
+                print(entry.name)
+
+
 # This will print the path to the root    
 def get_path():    
     root_path = os.getcwd()
     return root_path
 
-x = get_path()
-print(x)
+list_dir()
