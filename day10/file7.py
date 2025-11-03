@@ -1,28 +1,14 @@
-# This project is meant to help with my scheduling issues. I often miss getting any work done and whenever I get back to this I have to count
-# So this program will give me what file I'm on and what day.
-import os
-import re
+# Refactor for this:
+
+from datetime import date
+
+
+def get_day():
+    # We define when we started working
+    start_date = date(2025, 10, 22)
+    today = date.today()
+
+    days_passed = (today - start_date).days + 1 # +1 if day 1 = start day
     
-# Function that lists every directory that starts with 'day'.
-def list_dir():
-    directories = []
+    return days_passed
 
-    with os.scandir(path=get_path()) as it:
-        for entry in it:
-            if entry.name.startswith('day') and entry.is_dir():
-                directories.append(entry)
-    return directories
-    
-
-
-# This will print the path to the root    
-def get_path():    
-    root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return root_path
-
-def get_match():
-    entries = list_dir()
-
-    for entry in entries:
-        match = re.match(r"day(\d+)$", entry.name)
-        print(match)
