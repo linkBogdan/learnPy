@@ -9,15 +9,14 @@ def get_path():
     return root_path
 
 def create_today_dir():
+    """ Create a directory with current day"""
     dir_name = get_day()
-
     root = get_path()
     full_path = os.path.join(root, dir_name)
 
-    if not os.path.exists(full_path):
-        os.makedirs(full_path)
-    else:
-        print(f"{dir_name} already exists")    
+    os.makedirs(full_path, exist_ok=True)
+    print(f"Directory ready: {full_path}")
+    return full_path
 
 def get_day():
     """ Return today's day folder name and start date"""
@@ -30,3 +29,5 @@ def get_day():
     
     return dir_format_name
 
+if __name__ == "__main__":
+    create_today_dir()
